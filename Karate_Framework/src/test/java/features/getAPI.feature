@@ -2,7 +2,7 @@ Feature:  GET API Feature
   
   Scenario: get user details
   	Given url baseUrl+'/public/v2/users'
-  	And path '6752840'
+  	And path '6755919'
   	When method GET
   	Then status 200
   	* print response
