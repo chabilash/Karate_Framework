@@ -1,8 +1,9 @@
-Feature: POST API Feature - Create Random User
-  I want to create User through POST Call
+Feature: POST API Feature - Create User getting request payload from json file
+  
 
   Background:
 		* url baseUrl
+		
 		* def random_String = 
 		"""
 			function(s){
@@ -14,22 +15,16 @@ Feature: POST API Feature - Create Random User
 							
 			}
 		"""
-		* def randomString = random_String(10)
-		* print randomString
-		* def requestPayload = 
-		"""
-		{
+		* def requestPayload = read('classpath:src/test/resources/payload/user.json')
 		
-    "gender" : "male",
-    "status" : "active"
-		}
-	
-		"""
+		* def randomString = random_String(10)
 		*	set requestPayload.email = randomString + "@gmail.com"
 		* print randomString 
 		*	set requestPayload.name = randomString
+		* print requestPayload
+	
 		
-  Scenario: Create new Random User
+  Scenario: Create new User
   	Given path '/public/v2/users'
   	And request requestPayload
   	And header Authorization = 'Bearer '+ tokenID
@@ -38,5 +33,4 @@ Feature: POST API Feature - Create Random User
   	And match $.id == '#present'
   	And match $.name == requestPayload.name
   	And match $.email == requestPayload.email
-  	
    
